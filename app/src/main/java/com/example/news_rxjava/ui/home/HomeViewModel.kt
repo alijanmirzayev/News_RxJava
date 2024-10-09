@@ -36,14 +36,15 @@ class HomeViewModel @Inject constructor(
             .doOnSubscribe {
                 _loading.postValue(true)
             }
+            .doFinally {
+                _loading.postValue(false)
+            }
             .subscribe(
                 { response ->
                     _news.value = response
-                    _loading.value = false
                 },
                 { throwable ->
                     _error.value = throwable.message
-                    _loading.value = false
                 }
             )
 
